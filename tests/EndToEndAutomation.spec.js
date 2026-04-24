@@ -49,12 +49,30 @@ await page.locator("#userEmail").fill("johnseena@gmail.com");
     break;
    }
   }
+  await expect(page.locator(".user__name [type='text']").first()).toHaveText("johnseena@gmail.com");
   await page.locator(".action__submit").click();
   await page.locator(".hero-primary").waitFor();
   const orderConfirmation=await page.locator(".hero-primary").textContent();
   console.log(orderConfirmation);
   await expect(page.locator(".hero-primary")).toBeVisible();
-await page.pause();
+ const orderId= await page.locator("label.ng-star-inserted").textContent();
+ console.log(orderId);
+ await page.locator("button[routerlink*='myorders']").click();
+ const orderRows= await page.locator("tbody tr"); // locator for all rows in the table
+ for(let i=0;i<await orderRows.count();i++)
+ {
+ const rowOrderId= await orderRows.nth(i).locator("th").textContent();
+ if(orderId.includes(rowOrderId))
+ {
+ // await orderRows.nth(i).locator("button").first().click();
+ await page.locator("button:has-text('View')").waitFor();
+ await page.locator("button:has-text('View')").click();
+  break;
+ }
+ 
+ }
+  await page.pause();
+
 
 
 
