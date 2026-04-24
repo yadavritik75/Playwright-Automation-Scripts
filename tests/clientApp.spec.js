@@ -6,7 +6,7 @@ await page.locator("#username").fill("rahulshettyacademy");
 await page.locator("#password").fill("Learning@830$3mK2");
 await page.locator("span.checkmark").nth(0).click();
 const dropDown= page.locator("[data-style='btn-info']");
-await dropDown.selectOption("Consultant");
+await dropDown.selectOption("consult");
 console.log(await page.locator("[name='terms']").isChecked()); // Returns True/False
 await page.locator("[name='terms']").click();
 await expect(page.locator("[name='terms']")).toBeChecked(); // toBeChecked() is used for Assertion
