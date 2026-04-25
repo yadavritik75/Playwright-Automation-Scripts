@@ -6,6 +6,7 @@ const productName="ADIDAS ORIGINAL";
 const couponConfirmation=page.locator(".mt-1.ng-star-inserted");
 const products=page.locator(".card-body");
 await page.locator("#userEmail").fill("johnseena@gmail.com");
+
      await page.locator("#userPassword").fill("johnseenA@123");
      await page.locator("#login").click();
      console.log(await page.locator("#toast-container").textContent());
@@ -62,24 +63,15 @@ await page.locator("#userEmail").fill("johnseena@gmail.com");
  for(let i=0;i<await orderRows.count();i++)
  {
  const rowOrderId= await orderRows.nth(i).locator("th").textContent();
- if(orderId.includes(rowOrderId))
+ if(orderId.trim().includes(rowOrderId.trim()))
  {
  // await orderRows.nth(i).locator("button").first().click();
- await page.locator("button:has-text('View')").waitFor();
- await page.locator("button:has-text('View')").click();
+ await orderRows.nth(i).locator("button:has-text('View')").click();
   break;
  }
  
  }
   await page.pause();
-
-
-
-
-
-
-     
-
 
 
 });
