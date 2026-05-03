@@ -3,7 +3,6 @@
 This repository contains end-to-end UI automation scripts built using **Playwright**.  
 The project demonstrates strong hands-on experience in modern test automation practices.
 
----
 
 ## 📌 Tech Stack
 - Playwright (JavaScript)
@@ -11,10 +10,7 @@ The project demonstrates strong hands-on experience in modern test automation pr
 - VS Code
 - Git & GitHub
 
----
 
-
----
 
 ## ✅ Features Covered
 - 🔹 Dynamic & Static Dropdown Handling
