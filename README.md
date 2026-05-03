@@ -47,3 +47,9 @@ npx playwright test tests/className --debug
 
 #Run with Test Runner
 npx playwright test tests/className --ui
+
+#Record & PlayBack Tool
+npx playwright codegen amazon.com
+
+📸 Reporting
+npx playwright show-report
