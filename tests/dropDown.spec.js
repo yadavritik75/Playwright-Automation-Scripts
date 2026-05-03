@@ -45,8 +45,15 @@ test("dynamic dropdowns",async({page})=>
   await page.locator("#ui-id-1 a", { hasText: "India" }).nth(1).click();
 
 
-await page.pause()
+// page level TakesScreenshot
+await page.screenshot({path:"screenshot.png"})
+// specific webElement Screenshot
+await page.locator("#autosuggest").screenshot({path:"screenshot.png"})
 
-
-
+});
+test.only("visual testing",async({page})=>
+{
+//visual testing
+await page.goto("https://www.google.com/")
+await expect(await page.screenshot()).toMatchSnapshot("landing.png")
 });
