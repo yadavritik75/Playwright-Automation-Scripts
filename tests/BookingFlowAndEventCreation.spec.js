@@ -35,8 +35,11 @@ const card = eventCards
 // - Assert the matched card is visible 
 await expect(card).toBeVisible();
 // - Read the seat count text from that card (locate element containing text seat, parse integer from its inner text) — store this as seatsBeforeBooking
+const seatText=await page.locator("[class*='pt-3']").filter({hasText:"500 seats available"}).last().textContent();
+console.log(seatText);
+const seatBeforeBooking = parseInt(seatText.match(/(\d+)\s*seats/)[1]);
+console.log(seatBeforeBooking); // 500
 
-await page.pause();
 
 
 
