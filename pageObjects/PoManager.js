@@ -2,6 +2,8 @@ const {LoginPage}=require("../pageObjects/LoginPage");
 const {Dashboard}=require("../pageObjects/Dashboard");
 const{CartPage}=require("../pageObjects/CartPage");
 const{OrderReviewPage}=require("../pageObjects/OrderReviewPage");
+const{OrderConfirmationPage}=require("../pageObjects/OrderConfirmationPage");
+const {YourOrdersPage}=require("../pageObjects/YourOrdersPage");
 
 class PoManager
 {
@@ -12,6 +14,8 @@ class PoManager
         this.dashboard=new Dashboard(page);
         this.cartPage=new CartPage(page);
         this.orderReviewPage=new OrderReviewPage(page);
+        this.orderConfirmationPage=new OrderConfirmationPage(page);
+        this.yourOrdersPage=new YourOrdersPage(page);
     }
     getLoginPage()
     {
@@ -28,6 +32,14 @@ class PoManager
     getOrderReviewPage()
     {
         return this.orderReviewPage;
+    }
+    getOrderConfirmationPage()
+    {
+        return this.orderConfirmationPage;
+    }
+    getOrdersPage()
+    {
+     return new YourOrdersPage(this.page);   
     }
 
 }

@@ -30,26 +30,23 @@ await dashboard.navigateToCart();
   await orderReviewPage.verifyEmail(username);
   await orderReviewPage.submitOrder();
 
-  await page.locator(".hero-primary").waitFor();
-  const orderConfirmation=await page.locator(".hero-primary").textContent();
-  console.log(orderConfirmation);
-  await expect(page.locator(".hero-primary")).toBeVisible();
- const orderId= await page.locator("label.ng-star-inserted").textContent();
- console.log(orderId);
- await page.locator("button[routerlink*='myorders']").click();
- await page.locator("table[class*='table table']").first().waitFor();
- const orderRows= await page.locator("tbody tr"); // locator for all rows in the table
- for(let i=0;i<await orderRows.count();i++)
- {
- const rowOrderId= await orderRows.nth(i).locator("th").textContent();
- if(orderId.trim().includes(rowOrderId.trim()))
- {
- await expect(orderRows.nth(i).locator("button:has-text('View')")).toBeVisible();
- await orderRows.nth(i).locator("button:has-text('View')").click();
- break;
- }
- 
- }
+const orderConfirmationPage=poManager.getOrderConfirmationPage();
+const confirmationText=await orderConfirmationPage.getConfirmationText();
+console.log(confirmationText);
+await expect(confirmationText).toContain("Thankyou for the order.");
+const orderId=await orderConfirmationPage.getOrderId();
+console.log(orderId);
+await orderConfirmationPage.navigateToOrders();
+const YourOrdersPage=poManager.getOrdersPage();
+await YourOrdersPage.searchOrderAndSelect(orderId);
 
+
+
+
+
+
+
+
+ 
 
 });
