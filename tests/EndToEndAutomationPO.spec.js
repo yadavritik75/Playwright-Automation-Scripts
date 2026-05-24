@@ -5,7 +5,7 @@ test("End-End Testing",async({page})=>
 const username="johnseena@gmail.com";
 const password="johnseenA@123";
 const productName="ADIDAS ORIGINAL";
-const couponConfirmation=page.locator(".mt-1.ng-star-inserted");
+
 
 const poManager=new PoManager(page);
 const loginPage=poManager.getLoginPage();
