@@ -1,6 +1,8 @@
 const {LoginPage}=require("../pageObjects/LoginPage");
 const {Dashboard}=require("../pageObjects/Dashboard");
 const{CartPage}=require("../pageObjects/CartPage");
+const{OrderReviewPage}=require("../pageObjects/OrderReviewPage");
+
 class PoManager
 {
     constructor(page)
@@ -9,6 +11,7 @@ class PoManager
         this.loginPage=new LoginPage(page);
         this.dashboard=new Dashboard(page);
         this.cartPage=new CartPage(page);
+        this.orderReviewPage=new OrderReviewPage(page);
     }
     getLoginPage()
     {
@@ -21,6 +24,10 @@ class PoManager
     getCartPage()
     {
         return this.cartPage;
+    }
+    getOrderReviewPage()
+    {
+        return this.orderReviewPage;
     }
 
 }

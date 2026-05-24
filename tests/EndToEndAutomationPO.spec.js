@@ -22,35 +22,14 @@ await dashboard.navigateToCart();
   const bool = await cartPage.verifyProductInCart(productName);
   expect(bool).toBeTruthy();
   await cartPage.CheckOut();
+  const orderReviewPage=poManager.getOrderReviewPage();
+  await orderReviewPage.selectMonthAndDate("10","20");
+  const couponMessage=await orderReviewPage.applyCouponCode("rahulshettyacademy");
+  console.log(couponMessage);
+  await orderReviewPage.selectCountry("India");
+  await orderReviewPage.verifyEmail(username);
+  await orderReviewPage.submitOrder();
 
-
-
-    const dropdown= await page.locator("[class='input ddl']").nth(0);
-    await dropdown.selectOption("05");
-    const dropdown1= await page.locator("[class='input ddl']").nth(1);
-    await dropdown1.selectOption("05");
-    await page.locator("[name='coupon']").fill("rahulshettyacademy");
-    await page.locator(".btn.btn-primary.mt-1").click();
-    await couponConfirmation.waitFor();
-    const message=await couponConfirmation.textContent();
-    await expect(page.locator(".mt-1.ng-star-inserted")).toBeVisible(); //toBeVisible used for assertion & is visible is  a locator method
-    console.log(message);
-
-  await page.locator("[placeholder*='Select Country']").pressSequentially("Ind");
-  const countryDropdown= page.locator(".ta-results");
-  await countryDropdown.waitFor();
-  const optionsCount=await countryDropdown.locator("button").count();
-  for(let i=0;i<optionsCount;i++)
-  {
-   const text=await countryDropdown.locator("button").nth(i).textContent();
-   if(text===" India")
-   {
-    await countryDropdown.locator("button").nth(i).click();
-    break;
-   }
-  }
-  await expect(page.locator(".user__name [type='text']").first()).toHaveText("johnseena@gmail.com");
-  await page.locator(".action__submit").click();
   await page.locator(".hero-primary").waitFor();
   const orderConfirmation=await page.locator(".hero-primary").textContent();
   console.log(orderConfirmation);
