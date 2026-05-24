@@ -1,35 +1,30 @@
 const { test, expect } = require("@playwright/test");
-const {LoginPage}=require("../pageObjects/LoginPage");
+const {PoManager}=require("../pageObjects/PoManager");
 test("End-End Testing",async({page})=>
 {
 const username="johnseena@gmail.com";
 const password="johnseenA@123";
 const productName="ADIDAS ORIGINAL";
 const couponConfirmation=page.locator(".mt-1.ng-star-inserted");
-const products=page.locator(".card-body");
 
-const loginPage=new LoginPage(page);
+const poManager=new PoManager(page);
+const loginPage=poManager.getLoginPage();
 await loginPage.goTo();
 await loginPage.LoginToApplication(username,password);
 const toastMessage=await loginPage.getToastMessage();
 console.log(toastMessage);
  await expect(loginPage.toastContainer).toContainText("Login Successfully");
+const dashboard= poManager.getDashboard();
+await dashboard.searchProductAddToCart(productName); 
+await dashboard.navigateToCart();
+
+  const cartPage = poManager.getCartPage();
+  const bool = await cartPage.verifyProductInCart(productName);
+  expect(bool).toBeTruthy();
+  await cartPage.CheckOut();
 
 
-    const count= await products.count();
-     for(let i=0;i<count;i++)
-     {
-       if (await products.nth(i).locator("b").textContent()===productName)
-       {
-         await products.nth(i).locator("text= Add To Cart").click();
-         break;
-       }
-     }
-     await page.locator("[routerlink*='cart']").click();
-     await page.locator("div li").first().waitFor();
-     const bool=await page.locator(".cartSection h3").isVisible(); //("h3:has-text('Zara coat 4')")
-     expect(bool).toBeTruthy();
-     await page.locator("[type='button']").nth(1).click();
+
     const dropdown= await page.locator("[class='input ddl']").nth(0);
     await dropdown.selectOption("05");
     const dropdown1= await page.locator("[class='input ddl']").nth(1);
