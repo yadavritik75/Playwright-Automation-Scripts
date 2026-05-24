@@ -39,14 +39,4 @@ console.log(orderId);
 await orderConfirmationPage.navigateToOrders();
 const YourOrdersPage=poManager.getOrdersPage();
 await YourOrdersPage.searchOrderAndSelect(orderId);
-
-
-
-
-
-
-
-
- 
-
 });
