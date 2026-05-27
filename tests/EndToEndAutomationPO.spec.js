@@ -1,26 +1,22 @@
 const { test, expect } = require("@playwright/test");
 const {PoManager}=require("../pageObjects/PoManager");
 const dataSet=JSON.parse(JSON.stringify(require("../utils/placeOrderTestData.json")));
-test("End-End Testing",async({page})=>
+for(const data of dataSet)
 {
-const username="johnseena@gmail.com";
-const password="johnseenA@123";
-const productName="ADIDAS ORIGINAL";
-
-
+test(`End-End Testing for ${data.productName}`, async ({ page }) => {
 const poManager=new PoManager(page);
 const loginPage=poManager.getLoginPage();
 await loginPage.goTo();
-await loginPage.LoginToApplication(dataSet.username,dataSet.password);
+await loginPage.LoginToApplication(data.username,data.password);
 const toastMessage=await loginPage.getToastMessage();
 console.log(toastMessage);
  await expect(loginPage.toastContainer).toContainText("Login Successfully");
 const dashboard= poManager.getDashboard();
-await dashboard.searchProductAddToCart(dataSet.productName); 
+await dashboard.searchProductAddToCart(data.productName); 
 await dashboard.navigateToCart();
 
   const cartPage = poManager.getCartPage();
-  const bool = await cartPage.verifyProductInCart(dataSet.productName);
+  const bool = await cartPage.verifyProductInCart(data.productName);
   expect(bool).toBeTruthy();
   await cartPage.CheckOut();
   const orderReviewPage=poManager.getOrderReviewPage();
@@ -28,7 +24,7 @@ await dashboard.navigateToCart();
   const couponMessage=await orderReviewPage.applyCouponCode("rahulshettyacademy");
   console.log(couponMessage);
   await orderReviewPage.selectCountry("India");
-  await orderReviewPage.verifyEmail(dataSet.username);
+  await orderReviewPage.verifyEmail(data.username);
   await orderReviewPage.submitOrder();
 
 const orderConfirmationPage=poManager.getOrderConfirmationPage();
@@ -41,3 +37,4 @@ await orderConfirmationPage.navigateToOrders();
 const YourOrdersPage=poManager.getOrdersPage();
 await YourOrdersPage.searchOrderAndSelect(orderId);
 });
+}
